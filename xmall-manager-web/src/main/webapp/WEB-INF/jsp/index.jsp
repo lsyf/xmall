@@ -41,7 +41,7 @@
                         </ul>
                         <li class="navbar-levelone current"><a href="javascript:;">平台</a></li>
                         <li class="navbar-levelone"><a href="javascript:;">财务</a></li>
-                        <li ><a href="http://blog.exrick.cn" target="_blank">商城前台</a></li>
+                        <li ><a href="http://xmall.exrick.cn" target="_blank">商城前台</a></li>
                     </li>
                 </ul>
             </nav>
@@ -262,11 +262,7 @@
             type: 'GET',
             url: '/user/logout',
             success:function (data) {
-                if(data.success==true){
-                    window.location.href="/login";
-                }else{
-                    layer.msg(data.message);
-                }
+                window.location.href="/login";
             },
             error:function(XMLHttpRequest){
                 layer.alert('数据处理失败! 错误码:'+XMLHttpRequest.status+' 错误信息:'+JSON.parse(XMLHttpRequest.responseText).message,{title: '错误信息',icon: 2});

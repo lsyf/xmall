@@ -20,6 +20,8 @@ Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索
 
 ### 推荐学习资源
 
+- [Elasticsearch Java API 手册](https://es.quanke.name/)
+
 - [Elasticsearch权威指南](http://www.learnes.net/index.html)
 
 ### 安装环境
@@ -31,11 +33,11 @@ Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索
 
 - [官方下载地址](https://www.elastic.co/downloads/elasticsearch)
 
-- 解压安装包 `# tar zxvf elasticsearch-5.2.0.tar.gz`
+- 解压安装包 `# tar zxvf elasticsearch-5.6.2.tar.gz`
 
 - 运行elasticsearch脚本启动
 
-    `# cd /elasticsearch-5.2.0/bin`
+    `# cd /elasticsearch-5.6.2/bin`
 
     `# ./elasticsearch`
 
@@ -47,7 +49,7 @@ Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索
 
     `Java HotSpot(TM) 64-Bit Server VM warning: INFO: os::commit_memory(0x0000000085330000, 2060255232, 0) failed; error='Cannot allocate memory' (errno=12)`
 
-- 因个人服务器只有1g内存，需配置 `elasticsearch/config/jvm.options`，只有根据服务器改小分配堆空间的最大值了([或者启用Swap交换分区](https://baike.baidu.com/item/Swap%E5%88%86%E5%8C%BA/7613378?fr=aladdin))：
+- 因个人服务器只有1g内存，需配置 `elasticsearch/config/jvm.options`，只有根据服务器改小分配堆空间的最大值了([或者启用Swap交换分区](https://github.com/Exrick/xmall/blob/master/study/Linux.md))：
 
 ```
 ################################################################
@@ -137,7 +139,7 @@ npm run start
 
 - 打开浏览器输入：IP:9100
 
-- 正常的话可以看到已经连接了ES，但是看不到连接信息，这时候需要在在 es 的 elasticsearch.ym 里添加如下配置：
+- 正常的话可以看到已经连接了ES，但是看不到连接信息，这时候需要在在 es 的 elasticsearch.yml 里添加如下配置：
 
     `http.cors.enabled: true`
 

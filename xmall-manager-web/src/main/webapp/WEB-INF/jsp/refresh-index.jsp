@@ -80,7 +80,7 @@
 
     $.ajax({
         type: 'GET',
-        url: 'http://123.207.121.135:9200',
+        url: 'http://127.0.0.1:9200',
         dataType: 'json',
         success: function(data) {
             $("#cluster_name").val(data.cluster_name);
@@ -94,7 +94,7 @@
 
     $.ajax({
         type: 'GET',
-        url: 'http://123.207.121.135:9200/_search',
+        url: 'http://127.0.0.1:9200/_search',
         dataType: 'json',
         success: function(data) {
             $("#num").val(data.hits.total);
@@ -107,15 +107,17 @@
         }
     });
 
-    /*分类-添加*/
+    /*同步索引*/
     function refresh_index(){
         $("#loading").removeAttr("hidden");
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:6666/goods/importIndex',
-            dataType: 'JSONP',
-            jsonpCallback: "callback",
+            url: '/goods/importIndex',
             success: function(data) {
+                if(data.success!=true){
+                    layer.alert(data.message,{title: '错误信息',icon: 2});
+                    return;
+                }
                 $("#loading").attr("hidden","hidden");
                 msgSuccess("同步成功");
             },

@@ -38,6 +38,9 @@ public class ItemESMessageListener implements MessageListener {
 	@Value("${ITEM_TYPE}")
 	private String ITEM_TYPE;
 
+	@Value("${ES_CONNECT_IP}")
+	private String ES_CONNECT_IP;
+
 	@Override
 	public void onMessage(Message message) {
 		try {
@@ -55,11 +58,19 @@ public class ItemESMessageListener implements MessageListener {
 			Settings settings = Settings.builder()
 					.put("cluster.name", "xmall").build();
 			TransportClient client = new PreBuiltTransportClient(settings)
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("123.207.121.135"), 9300));
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(ES_CONNECT_IP), 9300));
 
 			if(text[0].equals("add")){
 				//根据商品id查询商品信息
 				SearchItem searchItem = itemMapper.getItemById(itemId);
+				String image=searchItem.getProductImageBig();
+				if (image != null && !"".equals(image)) {
+					String[] strings = image.split(",");
+					image=strings[0];
+				}else{
+					image="";
+				}
+				searchItem.setProductImageBig(image);
 				IndexResponse indexResponse = client.prepareIndex(ITEM_INDEX, ITEM_TYPE, String.valueOf(searchItem.getProductId()))
 						.setSource(jsonBuilder()
 								.startObject()

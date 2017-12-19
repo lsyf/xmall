@@ -6,9 +6,6 @@ import cn.exrick.search.service.SearchItemService;
 import cn.exrick.search.mapper.ItemMapper;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -16,6 +13,7 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.InetAddress;
@@ -23,6 +21,9 @@ import java.util.List;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
+/**
+ * @author Exrickx
+ */
 @Service
 public class SearchItemServiceImpl implements SearchItemService {
 
@@ -31,6 +32,9 @@ public class SearchItemServiceImpl implements SearchItemService {
 	@Autowired
 	private ItemMapper itemMapper;
 
+	@Value("${ES_CONNECT_IP}")
+	private String ES_CONNECT_IP;
+
 	@Override
 	public int importAllItems() {
 
@@ -38,7 +42,7 @@ public class SearchItemServiceImpl implements SearchItemService {
 			Settings settings = Settings.builder()
 					.put("cluster.name", "xmall").build();
 			TransportClient client = new PreBuiltTransportClient(settings)
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("123.207.121.135"), 9300));
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(ES_CONNECT_IP), 9300));
 
 			//批量添加
 			BulkRequestBuilder bulkRequest = client.prepareBulk();
